@@ -6,7 +6,7 @@ import { ContactsList } from "./ContactsList/ContactList";
 import { FilterContacts } from "./FilterContacts/FilterContacts";
 
 export class App extends Component {
-  contactsId = shortid.generate();
+  
   state = {
     contacts: [
       {id: 'id-1', name: 'Thierry Henry', number: '159-11-16'},
@@ -20,8 +20,8 @@ export class App extends Component {
 
   formSubmitHandler = data => {
     console.log(data);
-    if (this.state.contacts.find(contact => (data.name === contact.name))){
-      alert(data.name + ' is already in contacts' )
+    if (this.state.contacts.find(contact => (data.name.toLowerCase() === contact.name.toLowerCase()))){
+      alert(data.name + ' - вже є в контактах' )
     }
     else {
       this.setState({ contacts: [...this.state.contacts, { name: data.name, number: data.number, id: shortid.generate() }] })
@@ -67,12 +67,10 @@ export class App extends Component {
       
         <h2 className="contactListTitle">Contacts</h2>
 
-        {this.state.filter !== ''?  <ContactsList
+          <ContactsList
           contacts={this.getFilterListContact()}
           onDeleteContact = {this.deleteContact}
-        />:<ContactsList
-          contacts={this.state.contacts}
-          onDeleteContact = {this.deleteContact}/>}
+        />
       
     
       </>
